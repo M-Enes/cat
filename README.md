@@ -11,4 +11,4 @@ Create bin directory: `mkdir bin`. \
 Compile the source code: `gcc -Wall -Wpedantic cat.c -o bin/cat`. \
 Go into bin directory: `cd bin`. \
 Create or copy a text file into the bin directory. \
-Run the program: `./cat <filename>`, replace <filename> with the name of the file you want to read in the bin directory.
+Run the program: `./cat <filename>`, replace `<filename>` with the name of the file you want to read in the bin directory.
