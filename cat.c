@@ -8,7 +8,7 @@
 
 int main(int argc, char **argv) {
     if (argc < 2) {
-        printf("You didn't give any parameters. Usage: %s filename\n", argv[0]);
+        printf("You didn't give any parameters. Use %s --help to see help.\n", argv[0]);
         exit(EXIT_SUCCESS);
     }
 
