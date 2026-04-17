@@ -3,8 +3,27 @@
 #include <string.h>
 #include <errno.h>
 
+#ifdef _WIN32
+#include <io.h>
+#include <fcntl.h>
+#endif
+
 #define BUFF_SIZE 1024
-#define CHARS_TO_READ 1
+#define BYTES_TO_READ 1
+
+void set_binary_mode() {
+#ifdef _WIN32
+
+    fflush(stdout);
+
+    int result = _setmode(_fileno(stdout), _O_BINARY);
+    if (result == -1) {
+        fprintf(stderr, "Error: Cannot set stdout mode to binary.\n");
+        exit(EXIT_FAILURE);
+    }
+
+#endif
+}
 
 int main(int argc, char **argv) {
     if (argc < 2) {
@@ -18,7 +37,7 @@ int main(int argc, char **argv) {
     }
 
     const char* path = argv[1];
-    const char* mode = "r";
+    const char* mode = "rb";
 
     FILE *file = fopen(path, mode);
     if (file == NULL) {
@@ -29,9 +48,11 @@ int main(int argc, char **argv) {
     char buff[BUFF_SIZE];
     size_t read_count;
 
+    set_binary_mode();
+
     while (1) {
         // buff filling with char sequence not trailed with 0
-        read_count = fread(buff, CHARS_TO_READ, BUFF_SIZE, file);
+        read_count = fread(buff, BYTES_TO_READ, BUFF_SIZE, file);
 
         if (read_count == BUFF_SIZE) {
             // both printf and fwrite writes read_count characters but printf stops at \0
