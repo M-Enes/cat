@@ -62,6 +62,7 @@ int main(int argc, char **argv) {
         else {
             if (ferror(file)) {
                 fprintf(stderr, "Error while reading file %s: %s", path, strerror(errno));
+                fclose(file);
                 exit(EXIT_FAILURE);
             }
             // EOF reached
